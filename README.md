@@ -4,7 +4,7 @@ A Unity game created for GMTK 2025 GameJam, focused on surviving the messy day a
 
 ## Overview
 
-Baked is a small gameplay loop where the player moves through a day/night cycle and completes tasks in two different environments: the house and the club. Each task has a countdown, and the player must keep up with the increasin speed of the loop to avoid failure. 
+Baked is a small gameplay loop where the player moves through a day/night cycle and completes tasks in two different environments: the house and the club. Each task has a countdown, and the player must keep up with the increasing speed of the loop to avoid failure. 
 
 ## Core Gameplay
 
@@ -23,7 +23,7 @@ You can play the game here: https://fenrirspk.itch.io/baked
 
 ## Project Highlights
 
-- **ScriptableObjects(SO):** The project uses Unity ScriptableObjects to separate reusable data from gameplay logic and keep tuning easy to manage.
+- **ScriptableObjects (SO):** The project uses Unity ScriptableObjects to separate reusable data from gameplay logic and keep tuning easy to manage.
 
 - **Custom Editor Scripts:** The project also includes editor tooling to improve inspector usability and workflow.
 
@@ -56,6 +56,6 @@ This project is still in development, and there are several areas that will be i
 
 - Code cleanup and refactoring
 - More robust state management
-- Implementation of new Unity's new UI system
-- Implementation of new Input System Package.
+- Implementation of Unity's new UI system
+- Implementation of new Input System package.
 - More polished transitions and feedback
