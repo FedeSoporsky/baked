@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a3e8242f4935e42ade6660586998d5, type: 3}
+  m_Name: SO_GameResources
+  m_EditorClassIdentifier: 
+  corridorSong: {fileID: 8300000, guid: f2fdee53d53cdfb439fbed85bdc1ee79, type: 3}
+  bolicheSong: {fileID: 8300000, guid: b4555b3ea801b8849966c14e52a223b1, type: 3}
+  houseSong: {fileID: 8300000, guid: a6b9fea6b2330e8438c7c22b95713742, type: 3}
+  gameOverSong: {fileID: 8300000, guid: 59357962d5848ab43a3f06095606d4e0, type: 3}
+  hiddenEndingSong: {fileID: 8300000, guid: a2ecb9ced3b7b314da7c6d0cdec5535b, type: 3}
+  entries:
+  - counterType: 0
+    clickClips:
+    - {fileID: 8300000, guid: 7405e8c1254a0fe499fb7c9b58db266b, type: 3}
+    - {fileID: 8300000, guid: f88671a3230c31540a7c8507ebc406a0, type: 3}
+    - {fileID: 8300000, guid: b419820ef2e181b478624f27eabd7a31, type: 3}
+    - {fileID: 8300000, guid: c5c6281b4eed0104bbc7dd413f1d025b, type: 3}
+    - {fileID: 8300000, guid: 67f56ce0d8ee4de41843ffcb64e39268, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: a53b9faf7233b0f4fa94980cd3a2dd46, type: 3}
+  - counterType: 1
+    clickClips:
+    - {fileID: 8300000, guid: 1a1b275e8f0832747a59f0d1deebaf23, type: 3}
+    - {fileID: 8300000, guid: 7356079561fad09468546b95e0595fe4, type: 3}
+    - {fileID: 8300000, guid: f400738bba4c5c3449527f4bb541b9c6, type: 3}
+    - {fileID: 8300000, guid: 4295733a091f041429418db231db23b4, type: 3}
+    - {fileID: 8300000, guid: 19993b18dee360042ae633d14c807663, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: 7da0fd5410e8f994a82ed82ec672844b, type: 3}
+  - counterType: 2
+    clickClips:
+    - {fileID: 8300000, guid: 6c5a20a10ba151b43b84d25b7d772d7a, type: 3}
+    - {fileID: 8300000, guid: 783e1c1539506984189a7386c88044ff, type: 3}
+    - {fileID: 8300000, guid: 0e61278d7a5b80447896fde146733219, type: 3}
+    - {fileID: 8300000, guid: 2b220b959b84beb4e9984db949420b45, type: 3}
+    - {fileID: 8300000, guid: a0485f536c5fb274baf8fbe7630ea3e3, type: 3}
+    - {fileID: 8300000, guid: af64d9dfcc2080e43b62966f9e0cce93, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: 96a19752b53902247a995ffc0ecadeca, type: 3}
+  - counterType: 3
+    clickClips:
+    - {fileID: 8300000, guid: 4d1304f9a4c0eac4ea9232b84cb41c6c, type: 3}
+    - {fileID: 8300000, guid: bcfab57001cd27e44a8ed80fbac69c08, type: 3}
+    - {fileID: 8300000, guid: 7aac55db0baffb94f8d885591113df8e, type: 3}
+    - {fileID: 8300000, guid: 69a8798889f743042a4635c14d560e59, type: 3}
+    - {fileID: 8300000, guid: 7a5dfd5396b08be41beffe59e1a48822, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: 85b09d67b1113cb4e80e9dfd53701856, type: 3}
+  - counterType: 4
+    clickClips:
+    - {fileID: 8300000, guid: f8c0d04a1dae09b4a85153967c66ef84, type: 3}
+    - {fileID: 8300000, guid: b8512c3b41b9d3c4ba336c834744f4ef, type: 3}
+    - {fileID: 8300000, guid: eed2d0ace6e99d447b83342bd94872ae, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: 7ce3f0f79130b544a928654ee285f9f6, type: 3}
+  - counterType: 5
+    clickClips:
+    - {fileID: 8300000, guid: cb2c3db217d5ffa40a7d85c1317c7d8a, type: 3}
+    - {fileID: 8300000, guid: 20c871265eba2854b880a62c304c0ec4, type: 3}
+    - {fileID: 8300000, guid: 7cc1fa481bb9e2948b13d5a8740a2c29, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: ef169a6f747e11b48b2118d8fb8c8c87, type: 3}
+  - counterType: 6
+    clickClips:
+    - {fileID: 8300000, guid: 42a805143e40fc54eb2b2f1ce9be6aa7, type: 3}
+    - {fileID: 8300000, guid: e521ab9a2b7fd2f48a43d196cf64dfb2, type: 3}
+    - {fileID: 8300000, guid: e0cbe5e10a1dfaf4bb92d2456052e640, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: 2e51a9c16e2e01044913bb72370eb167, type: 3}
+  - counterType: 7
+    clickClips:
+    - {fileID: 8300000, guid: 0270ab669de3f124298142d5c73251a2, type: 3}
+    - {fileID: 8300000, guid: 5c72e34eb03d08c4cb77e0630ba8dc40, type: 3}
+    - {fileID: 8300000, guid: 942497042f11f394691295e7353e2541, type: 3}
+    - {fileID: 8300000, guid: 12485a98e422d994089c9fa9f49f5ff9, type: 3}
+    taskCompletedClip: {fileID: 8300000, guid: 54c3c699f6b986844800b5f0fc9fdd62, type: 3}

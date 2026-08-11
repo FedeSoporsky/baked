@@ -1,0 +1,72 @@
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+UserSettings/
+.vs/
+*.pidb
+*.suo
+*.user
+*.userprefs
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb.meta
+*.booproj
+*.svd
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Addressables
+/Library/com.unity.addressables/*
+*/*/*.csproj
+*/*/*.sln
+*/*/.idea/
+*/*/Library/
+*/*/Temp/
+*/*/obj/
+*/*/builds/
+*/*/ServerData/
+*/*/Logs/
+*/*/Assets/Plugins/
+*/*/Assets/Plugins.meta
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# Logs
+Logs/
+
+# Crash reports
+CrashReporting/
+
+# Keystore
+*.keystore
+
+# Built application files
+*.apk
+*.aab
+*.ipa
+*.unitypackage
+
+# Other
+*.log
+*.cache
+
+# Ignore secrets
+*.env
+*.txt.secret
+
+# Git LFS placeholder
+.gitattributes
