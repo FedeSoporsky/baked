@@ -186,7 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2675372}
   m_Layer: 0
-  m_Name: PasilloProps
+  m_Name: CorridorProps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -287,7 +287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 82099fdf588110e44bcaac2a2d5c5405, type: 3}
       propertyPath: m_Name
-      value: Lavamanos
+      value: Washbasin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -356,7 +356,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (12)
+      value: LittleBush(12)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -904,7 +904,7 @@ GameObject:
   - component: {fileID: 90676016}
   - component: {fileID: 90676015}
   m_Layer: 0
-  m_Name: Piso_club1 (1)
+  m_Name: ClubFloor (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1066,7 +1066,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (6)
+      value: LittleBush (6)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2202,7 +2202,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cf7441c717d32c4f9444917c20b43ad, type: 3}
       propertyPath: m_Name
-      value: vereda x3 (3)
+      value: Sidewalk x3 (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2394,7 +2394,7 @@ GameObject:
   - component: {fileID: 180432502}
   - component: {fileID: 180432501}
   m_Layer: 0
-  m_Name: Piso_global
+  m_Name: GlobalFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2997,7 +2997,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin
+      value: LittleBush
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9538,7 +9538,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cf7441c717d32c4f9444917c20b43ad, type: 3}
       propertyPath: m_Name
-      value: vereda x3 (1)
+      value: Sidewalk x3 (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9604,7 +9604,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (1)
+      value: LittleBush (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11267,7 +11267,7 @@ GameObject:
   - component: {fileID: 442769354}
   - component: {fileID: 442769353}
   m_Layer: 0
-  m_Name: Piso_club1
+  m_Name: ClubFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11491,7 +11491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 461785610}
   m_Layer: 0
-  m_Name: luces interior club
+  m_Name: IndoorClubLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17565,7 +17565,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (16)
+      value: LittleBush (16)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23119,7 +23119,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (11)
+      value: LittleBush (11)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23329,7 +23329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 52b93e47706bb5a4e9ce8f52c1e30907, type: 3}
       propertyPath: m_Name
-      value: planta muerta (1)
+      value: DeadPlant(1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23752,7 +23752,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (15)
+      value: LittleBush(15)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23925,7 +23925,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (3)
+      value: LittleBush (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25891,7 +25891,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (9)
+      value: LittleBush (9)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25973,7 +25973,7 @@ GameObject:
   - component: {fileID: 845917245}
   - component: {fileID: 845917244}
   m_Layer: 0
-  m_Name: Piso_livingcomedor
+  m_Name: LivingRoomFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26118,7 +26118,7 @@ GameObject:
   - component: {fileID: 882013160}
   - component: {fileID: 882013159}
   m_Layer: 0
-  m_Name: Piso_pasillo
+  m_Name: CorridorFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26337,7 +26337,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (2)
+      value: LittleBush (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26768,7 +26768,7 @@ GameObject:
   - component: {fileID: 937432995}
   - component: {fileID: 937432994}
   m_Layer: 0
-  m_Name: "Piso_ba\xF1o"
+  m_Name: BathroomFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27914,7 +27914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2b5e7a115fc79db4898e229384fd565e, type: 3}
       propertyPath: m_Name
-      value: Can_Broken (3)
+      value: BrokenCan
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28674,7 +28674,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (4)
+      value: LittleBush (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33788,7 +33788,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (5)
+      value: LittleBush (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -39488,7 +39488,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cf7441c717d32c4f9444917c20b43ad, type: 3}
       propertyPath: m_Name
-      value: vereda x3 (6)
+      value: Sidewalk x3 (6)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -39558,7 +39558,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cf7441c717d32c4f9444917c20b43ad, type: 3}
       propertyPath: m_Name
-      value: vereda x3 (2)
+      value: Sidewalk x3 (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40386,7 +40386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cb7901719ef0ae040bbce378a8a91c82, type: 3}
       propertyPath: m_Name
-      value: tachobasura verde
+      value: GreenTrashBin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40666,7 +40666,7 @@ GameObject:
   - component: {fileID: 1272824018}
   - component: {fileID: 1272824017}
   m_Layer: 0
-  m_Name: Piso_cocina
+  m_Name: KitchenFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40824,7 +40824,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cf7441c717d32c4f9444917c20b43ad, type: 3}
       propertyPath: m_Name
-      value: vereda x3
+      value: Sidewalk x3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45426,7 +45426,7 @@ GameObject:
   - component: {fileID: 1534532413}
   - component: {fileID: 1534532412}
   m_Layer: 0
-  m_Name: Piso_habitacion
+  m_Name: BedroomFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46165,7 +46165,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (13)
+      value: LittleBush (13)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -47881,7 +47881,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (10)
+      value: LittleBush (10)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49019,7 +49019,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (14)
+      value: LittleBush (14)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49081,7 +49081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2f6003b882edf7e419fb06ab3162cd53, type: 3}
       propertyPath: m_Name
-      value: ducha
+      value: Shower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49802,7 +49802,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cf7441c717d32c4f9444917c20b43ad, type: 3}
       propertyPath: m_Name
-      value: vereda x3 (4)
+      value: Sidewalk x3 (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -50007,7 +50007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 52b93e47706bb5a4e9ce8f52c1e30907, type: 3}
       propertyPath: m_Name
-      value: planta muerta
+      value: DeadPlant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -50732,7 +50732,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cf7441c717d32c4f9444917c20b43ad, type: 3}
       propertyPath: m_Name
-      value: vereda x3 (5)
+      value: Sidewalk x3 (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -52292,7 +52292,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (7)
+      value: LittleBush (7)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -52800,7 +52800,7 @@ GameObject:
   - component: {fileID: 1963888058}
   - component: {fileID: 1963888057}
   m_Layer: 0
-  m_Name: Piso_exteriorpasillo
+  m_Name: OutdoorCorridorFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54410,7 +54410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2baefb556b78b4242841239f3d20627a, type: 3}
       propertyPath: m_Name
-      value: alfombra
+      value: Rug
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -54588,7 +54588,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ed774afcd3b7254795f3cd1c35227a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 046384d15cbebcb4099fdbf8240ae51d, type: 3}
       propertyPath: m_Name
-      value: arbustin (8)
+      value: LittleBush (8)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -54916,7 +54916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2051117653}
   m_Layer: 0
-  m_Name: luces interior casa
+  m_Name: OutdoorHouseLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55712,7 +55712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2122878356}
   m_Layer: 0
-  m_Name: luces exterior pasillo
+  m_Name: OutdoorCorridorLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

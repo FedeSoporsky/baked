@@ -8,33 +8,29 @@ public class SO_GameSettings : ScriptableObject
     [Header("HOUSE COUNTERS")]
     [Space(8)]
     [SerializeField]
-    public int CagarTotalCounter = 15;
+    public int DefecatingTotalCounter = 15;
     [SerializeField]
-    public int ComerTotalCounter = 15;
+    public int EatingTotalCounter = 15;
     [SerializeField]
-    public int TrabajarTotalCounter = 10;
+    public int WorkingTotalCounter = 10;
     [SerializeField]
-    public int DormirTotalCounter = 20;
+    public int SleepingTotalCounter = 20;
 
     [Header("CLUB COUNTERS")]
     [Space(8)]
     [SerializeField]
-    public int VomitarTotalCounter = 20;
+    public int VomitingTotalCounter = 20;
     [SerializeField]
-    public int EscabiarTotalCounter = 20;
+    public int DrinkingTotalCounter = 20;
     [SerializeField]
-    public int BesarTotalCounter = 20;
+    public int KissingTotalCounter = 20;
     [SerializeField]
-    public int DrogarseTotalCounter = 20;
+    public int SmokingTotalCounter = 20;
 
     [Header("UI")]
     [Space(8)]
-    public float alphaFadeInOutIncrementalStep = 0.1f; //Hay alguna manera de en el script de GameManagerEditor ocultar algunos fields?
+    public float alphaFadeInOutIncrementalStep = 0.1f;
     public float timeFadeInOutIncrementalStep = 0.1f;
-
-    [Header("Music Clips")]
-    [Space(8)]
-
 
     [Header("MISSCELLANEOUS")]
     [Space(8)]
@@ -58,21 +54,21 @@ public class SO_GameSettings : ScriptableObject
         switch (counter)
         {
             case Counter.Defecating:
-                return CagarTotalCounter;
+                return DefecatingTotalCounter;
             case Counter.Eating:
-                return ComerTotalCounter;
+                return EatingTotalCounter;
             case Counter.Working:
-                return TrabajarTotalCounter;
+                return WorkingTotalCounter;
             case Counter.Sleeping:
-                return DormirTotalCounter;
+                return SleepingTotalCounter;
             case Counter.Vomiting:
-                return VomitarTotalCounter;
+                return VomitingTotalCounter;
             case Counter.Drinking:
-                return EscabiarTotalCounter;
+                return DrinkingTotalCounter;
             case Counter.Kissing:
-                return BesarTotalCounter;
+                return KissingTotalCounter;
             case Counter.Smoking:
-                return DrogarseTotalCounter;
+                return SmokingTotalCounter;
             default:
                 throw new Exception("Bad Counters Enum value");
         }

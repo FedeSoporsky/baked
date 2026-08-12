@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class GameManagerBehavior : MonoBehaviour
 {
-    [SerializeField]
     public SO_GameSettings gameSettings;
 
     [SerializeField]
@@ -38,6 +37,7 @@ public class GameManagerBehavior : MonoBehaviour
     GameObject partyTimeElement;
     GameObject failureLayoutElement;
     GameObject dayOverElement;
+    TextMeshProUGUI dayOverElementText;
     GameObject hiddenEndingElement;
 
     [SerializeField]
@@ -62,7 +62,7 @@ public class GameManagerBehavior : MonoBehaviour
     Vector3 playerClubPosition;
 
     [SerializeField]
-    Vector3 playerClubRotation; 
+    Vector3 playerClubRotation;
 
     [SerializeField]
     float camClubPositionZ;
@@ -72,13 +72,13 @@ public class GameManagerBehavior : MonoBehaviour
     Vector3 playerHousePosition;
 
     [SerializeField]
-    Vector3 playerHouseRotation; 
+    Vector3 playerHouseRotation;
 
     [SerializeField]
     float camHousePositionZ;
 
     int totalGameCounter;
-    int acumulatedHours;
+    int accumulatedHours;
     int dayCounter = 0;
     float hideEndingCounter = 0;
 
@@ -97,55 +97,66 @@ public class GameManagerBehavior : MonoBehaviour
     internal bool gameOver = false;
     internal bool isHideEndingOn = false;
     internal bool isGameStarted = false;
-    int stageTotalHours = 12;
+    readonly int stageTotalHours = 12;
+    int intervalDuration;
+
+    WaitForSeconds timeFadeInOutIncrementalStep;
+    WaitForSeconds transitionBetweenStagesTime;
+    WaitForSeconds intervalTime;
 
     private void Start()
     {
         #region Dependency Loading
-        try
+        //This approach was prefered over inspector references because of the size of the project
+        //and the amount of references that would be needed to be set in the inspector.
+        transitionPanel = interLevelsUI.transform.Find("TransitionWhitePanel").gameObject;
+        if (transitionPanel == null)
         {
-            transitionPanel = interLevelsUI.transform.Find("TransitionWhitePanel").gameObject;
-            if (transitionPanel == null)
-            {
-                throw new Exception("Missing TransitionWhitePanel object.");
-            }
-            transitionPanelImage = transitionPanel.GetComponent<Image>();
-            dayOverElement = interLevelsUI.transform.Find("DayOverUIElement").gameObject;
-            partyTimeElement = interLevelsUI.transform.Find("PartyTimeMessage").gameObject;
-            failureLayoutElement = interLevelsUI.transform.Find("FailureLayout").gameObject;
-            var totalGameCounterGO = failureLayoutElement.transform.Find("TotalGameCounterUIElement");
-            if (totalGameCounterGO == null)
-            {
-                throw new Exception("TotalGameCounter object not found in interLevelsUI.");
-            }
-            totalGameCounterUIElement = totalGameCounterGO.GetComponent<TextMeshProUGUI>();
-            hiddenEndingElement = interLevelsUI.transform.Find("HiddenEnding").gameObject;
-
-            var hudDayCounterGO = HUD.transform.Find("DayCounter");
-            if (hudDayCounterGO == null)
-            {
-                throw new Exception("DayCounter object not found in HUD.");
-            }
-            hudDayCounter = hudDayCounterGO.GetComponent<TextMeshProUGUI>();
-            hudHouseCounters = HUD.transform.Find("HouseCounters").gameObject;
-            hudClubCounters = HUD.transform.Find("ClubCounters").gameObject;
-
-            if(player == null)
-            {
-                throw new Exception("Player object is not assigned in the inspector.");
-            }
-            playerInput = player.GetComponent<PlayerInput>();
-            thirdPersonController = player.GetComponent<ThirdPersonController>();
-            characterController = player.GetComponent<CharacterController>();
+            throw new Exception("Missing TransitionWhitePanel object.");
         }
-        catch (Exception e)
+        transitionPanelImage = transitionPanel.GetComponent<Image>();
+        dayOverElement = interLevelsUI.transform.Find("DayOverUIElement").gameObject;
+        if (dayOverElement == null)
         {
-            throw e;
+            throw new Exception("Missing DayOverUIElement object.");
         }
+        dayOverElementText = dayOverElement.GetComponent<TextMeshProUGUI>();
+        partyTimeElement = interLevelsUI.transform.Find("PartyTimeMessage").gameObject;
+        failureLayoutElement = interLevelsUI.transform.Find("FailureLayout").gameObject;
+        var totalGameCounterGO = failureLayoutElement.transform.Find("TotalGameCounterUIElement");
+        if (totalGameCounterGO == null)
+        {
+            throw new Exception("TotalGameCounter object not found in interLevelsUI.");
+        }
+        totalGameCounterUIElement = totalGameCounterGO.GetComponent<TextMeshProUGUI>();
+        hiddenEndingElement = interLevelsUI.transform.Find("HiddenEnding").gameObject;
+
+        var hudDayCounterGO = HUD.transform.Find("DayCounter");
+        if (hudDayCounterGO == null)
+        {
+            throw new Exception("DayCounter object not found in HUD.");
+        }
+        hudDayCounter = hudDayCounterGO.GetComponent<TextMeshProUGUI>();
+        hudHouseCounters = HUD.transform.Find("HouseCounters").gameObject;
+        hudClubCounters = HUD.transform.Find("ClubCounters").gameObject;
+
+        if (player == null)
+        {
+            throw new Exception("Player object is not assigned in the inspector.");
+        }
+        playerInput = player.GetComponent<PlayerInput>();
+        thirdPersonController = player.GetComponent<ThirdPersonController>();
+        characterController = player.GetComponent<CharacterController>();
         #endregion
 
+        intervalDuration = gameSettings.stageDurationInSeconds / stageTotalHours;
+
+        intervalTime = new WaitForSeconds(intervalDuration);
+        timeFadeInOutIncrementalStep = new WaitForSeconds(gameSettings.timeFadeInOutIncrementalStep);
+        transitionBetweenStagesTime = new WaitForSeconds(gameSettings.transitionBetweenStagesWaitingTimeInSeconds);
+
         clubTriggersContainer.SetActive(false);
-        acumulatedHours = 0;
+        accumulatedHours = 0;
         totalGameCounter = 0;
         StartCoroutine(TotalGameCounter());
         musicAudioSource.Play();
@@ -161,7 +172,6 @@ public class GameManagerBehavior : MonoBehaviour
 
     IEnumerator TotalGameCounter()
     {
-        var intervalDuration = gameSettings.stageDurationInSeconds / stageTotalHours;
         while (!stopCoroutine)
         {
             totalGameCounter++;
@@ -171,7 +181,7 @@ public class GameManagerBehavior : MonoBehaviour
             {
                 FinishStage();
             }
-            yield return new WaitForSeconds(intervalDuration);
+            yield return intervalTime;
         }
     }
 
@@ -183,7 +193,7 @@ public class GameManagerBehavior : MonoBehaviour
         {
             var newAlpha = Mathf.MoveTowards(transitionPanelImage.color.a, targetAlpha, gameSettings.alphaFadeInOutIncrementalStep);
             transitionPanelImage.color = new Color(transitionPanelImage.color.r, transitionPanelImage.color.g, transitionPanelImage.color.b, newAlpha);
-            yield return new WaitForSeconds(gameSettings.timeFadeInOutIncrementalStep);
+            yield return timeFadeInOutIncrementalStep;
         }
 
         transitionPanelImage.color = new Color(transitionPanelImage.color.r, transitionPanelImage.color.g, transitionPanelImage.color.b, targetAlpha);
@@ -199,10 +209,10 @@ public class GameManagerBehavior : MonoBehaviour
     private void FinishStage()
     {
         stopCoroutine = true;
-        acumulatedHours += totalGameCounter;
-        player.GetComponent<PlayerInput>().enabled = false;
-        player.GetComponent<ThirdPersonController>().enabled = false;
-        player.GetComponent<CharacterController>().enabled = false;
+        accumulatedHours += totalGameCounter;
+        playerInput.enabled = false;
+        thirdPersonController.enabled = false;
+        characterController.enabled = false;
         HUD.gameObject.SetActive(false);
         transitionPanel.SetActive(true);
 
@@ -231,7 +241,7 @@ public class GameManagerBehavior : MonoBehaviour
         player.transform.SetPositionAndRotation(playerCorridorPosition, new Quaternion(playerCorridorRotation.x, playerCorridorRotation.y, playerCorridorRotation.z, player.transform.rotation.w));
         cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camCorridorPositionZ);
 
-        yield return new WaitForSeconds(2);
+        yield return transitionBetweenStagesTime;
         partyTimeElement.SetActive(false);
         yield return FadeInOrOut(true);
     }
@@ -247,7 +257,7 @@ public class GameManagerBehavior : MonoBehaviour
         player.transform.SetPositionAndRotation(playerClubPosition, new Quaternion(playerClubRotation.x, playerClubRotation.y, playerClubRotation.z, player.transform.rotation.w));
         cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camClubPositionZ);
 
-        yield return new WaitForSeconds(gameSettings.transitionBetweenStagesWaitingTimeInSeconds); 
+        yield return transitionBetweenStagesTime;
         yield return FadeInOrOut(true);
 
         clubTriggersContainer.SetActive(true);
@@ -277,13 +287,13 @@ public class GameManagerBehavior : MonoBehaviour
         {
             dayOverElement.SetActive(true);
             dayCounter++;
-            dayOverElement.GetComponent<TextMeshProUGUI>().text = $"DAY {dayCounter} IS OVER";
+            dayOverElementText.text = $"DAY {dayCounter} IS OVER";
         }
 
         player.transform.SetPositionAndRotation(playerHousePosition, new Quaternion(playerHouseRotation.x, playerHouseRotation.y, playerHouseRotation.z, player.transform.rotation.w));
         cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camHousePositionZ);
 
-        yield return new WaitForSeconds(gameSettings.transitionBetweenStagesWaitingTimeInSeconds);
+        yield return transitionBetweenStagesTime;
 
         dayOverElement.SetActive(false);
         yield return FadeInOrOut(true);
@@ -312,24 +322,24 @@ public class GameManagerBehavior : MonoBehaviour
             var clip = gameResources.gameOverSong;
             musicAudioSource.PlayOneShot(clip);
 
-            acumulatedHours += totalGameCounter;
+            accumulatedHours += totalGameCounter;
             failureLayoutElement.SetActive(true);
-            totalGameCounterUIElement.text = $"You survived the autodestructive loop: {dayCounter} Days and {acumulatedHours} Hours";
+            totalGameCounterUIElement.text = $"You survived the autodestructive loop: {dayCounter} Days and {accumulatedHours} Hours";
             gameOver = true;
         }
     }
 
     public void EnterClub()
     {
-        player.GetComponent<PlayerInput>().enabled = false;
-        player.GetComponent<ThirdPersonController>().enabled = false;
-        player.GetComponent<CharacterController>().enabled = false;
+        playerInput.enabled = false;
+        thirdPersonController.enabled = false;
+        characterController.enabled = false;
         StartCoroutine(TransitionToClub());
     }
 
     public void RestartGame()
     {
-        acumulatedHours = 0;
+        accumulatedHours = 0;
         gameOver = false;
 
         TriggerBehavior[] triggers;
@@ -365,7 +375,7 @@ public class GameManagerBehavior : MonoBehaviour
             musicAudioSource.Play();
 
             HUD.gameObject.SetActive(false);
-            player.GetComponent<ThirdPersonController>().enabled = false;
+            thirdPersonController.enabled = false;
             hiddenEndingElement.SetActive(true);
             gameOver = true;
             isHideEndingOn = true;

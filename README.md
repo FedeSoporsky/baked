@@ -23,7 +23,7 @@ You can play the game here: https://fenrirspk.itch.io/baked
 
 ## Project Highlights
 
-- **ScriptableObjects (SO):** The project uses Unity ScriptableObjects to separate reusable data from gameplay logic and keep tuning easy to manage.
+- **ScriptableObjects (SO):** The project uses Unity ScriptableObjects to separate reusable data from gameplay logic (applying *flyweight* pattern in the process) and keep tuning easy to manage.
 
 - **Custom Editor Scripts:** The project also includes editor tooling to improve inspector usability and workflow.
 

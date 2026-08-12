@@ -12,7 +12,7 @@ public class SO_GameResources : ScriptableObject
     internal AudioClip corridorSong;
 
     [SerializeField]
-    internal AudioClip bolicheSong;
+    internal AudioClip clubSong;
 
     [SerializeField]
     internal AudioClip houseSong;
