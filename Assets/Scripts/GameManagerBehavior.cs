@@ -251,7 +251,7 @@ public class GameManagerBehavior : MonoBehaviour
         yield return FadeInOrOut(false);
 
         musicAudioSource.Stop();
-        musicAudioSource.clip = gameResources.bolicheSong;
+        musicAudioSource.clip = gameResources.clubSong;
         musicAudioSource.Play();
 
         player.transform.SetPositionAndRotation(playerClubPosition, new Quaternion(playerClubRotation.x, playerClubRotation.y, playerClubRotation.z, player.transform.rotation.w));
