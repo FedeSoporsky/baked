@@ -34,6 +34,7 @@ public class GameManagerBehavior : MonoBehaviour
 
     TextMeshProUGUI totalGameCounterUIElement;
     GameObject transitionPanel;
+    Image transitionPanelImage;
     GameObject partyTimeElement;
     GameObject failureLayoutElement;
     GameObject dayOverElement;
@@ -45,8 +46,6 @@ public class GameManagerBehavior : MonoBehaviour
     TextMeshProUGUI hudDayCounter;
     GameObject hudHouseCounters;
     GameObject hudClubCounters;
-    GameObject hudHouseTaskBar;
-    GameObject hudClubTaskBar;
 
     [Header("Corridor Settings")]
     [SerializeField]
@@ -63,7 +62,7 @@ public class GameManagerBehavior : MonoBehaviour
     Vector3 playerClubPosition;
 
     [SerializeField]
-    Vector3 playerClubRotation; //Es igual a corridor. Igual que exista la variable da mas libertad, hay que compararlo con que sentido en gameplay tendría arrancar mirando para otro lado.
+    Vector3 playerClubRotation; 
 
     [SerializeField]
     float camClubPositionZ;
@@ -73,7 +72,7 @@ public class GameManagerBehavior : MonoBehaviour
     Vector3 playerHousePosition;
 
     [SerializeField]
-    Vector3 playerHouseRotation; //Podría ser igual a los otros 2?
+    Vector3 playerHouseRotation; 
 
     [SerializeField]
     float camHousePositionZ;
@@ -90,6 +89,9 @@ public class GameManagerBehavior : MonoBehaviour
         Night
     }
 
+    PlayerInput playerInput;
+    ThirdPersonController thirdPersonController;
+    CharacterController characterController;
     CurrentStage currentStage = CurrentStage.Day;
     bool stopCoroutine = false;
     internal bool gameOver = false;
@@ -103,6 +105,11 @@ public class GameManagerBehavior : MonoBehaviour
         try
         {
             transitionPanel = interLevelsUI.transform.Find("TransitionWhitePanel").gameObject;
+            if (transitionPanel == null)
+            {
+                throw new Exception("Missing TransitionWhitePanel object.");
+            }
+            transitionPanelImage = transitionPanel.GetComponent<Image>();
             dayOverElement = interLevelsUI.transform.Find("DayOverUIElement").gameObject;
             partyTimeElement = interLevelsUI.transform.Find("PartyTimeMessage").gameObject;
             failureLayoutElement = interLevelsUI.transform.Find("FailureLayout").gameObject;
@@ -122,8 +129,14 @@ public class GameManagerBehavior : MonoBehaviour
             hudDayCounter = hudDayCounterGO.GetComponent<TextMeshProUGUI>();
             hudHouseCounters = HUD.transform.Find("HouseCounters").gameObject;
             hudClubCounters = HUD.transform.Find("ClubCounters").gameObject;
-            hudHouseTaskBar = HUD.transform.Find("HouseTaskBar").gameObject;
-            hudClubTaskBar = HUD.transform.Find("ClubTaskBar").gameObject;
+
+            if(player == null)
+            {
+                throw new Exception("Player object is not assigned in the inspector.");
+            }
+            playerInput = player.GetComponent<PlayerInput>();
+            thirdPersonController = player.GetComponent<ThirdPersonController>();
+            characterController = player.GetComponent<CharacterController>();
         }
         catch (Exception e)
         {
@@ -162,34 +175,25 @@ public class GameManagerBehavior : MonoBehaviour
         }
     }
 
-    IEnumerator FadeOut() //Estos dos se pueden fusionar y que solo cambie la condición. Al menos la parte del fade.
+    IEnumerator FadeInOrOut(bool isFadingIn)
     {
-        var alphaIncrementalStep = gameSettings.alphaFadeInOutIncrementalStep;
-        var timeIncrementalStep = gameSettings.timeFadeInOutIncrementalStep;
-        var imageComponent = transitionPanel.GetComponent<Image>();
-        while (imageComponent.color.a < 1)
-        {
-            var alpha = imageComponent.color.a + alphaIncrementalStep;
-            imageComponent.color = new Color(imageComponent.color.r, imageComponent.color.g, imageComponent.color.b, alpha);
-            yield return new WaitForSeconds(timeIncrementalStep);
-        }
-    }
+        float targetAlpha = isFadingIn ? 0f : 1f;
 
-    IEnumerator FadeIn()
-    {
-        var alphaIncrementalStep = gameSettings.alphaFadeInOutIncrementalStep;
-        var timeIncrementalStep = gameSettings.timeFadeInOutIncrementalStep;
-        var imageComponent = transitionPanel.GetComponent<Image>();
-        while (imageComponent.color.a > 0)
+        while (!Mathf.Approximately(transitionPanelImage.color.a, targetAlpha))
         {
-            var alpha = imageComponent.color.a - alphaIncrementalStep;
-            imageComponent.color = new Color(imageComponent.color.r, imageComponent.color.g, imageComponent.color.b, alpha);
-            yield return new WaitForSeconds(timeIncrementalStep);
+            var newAlpha = Mathf.MoveTowards(transitionPanelImage.color.a, targetAlpha, gameSettings.alphaFadeInOutIncrementalStep);
+            transitionPanelImage.color = new Color(transitionPanelImage.color.r, transitionPanelImage.color.g, transitionPanelImage.color.b, newAlpha);
+            yield return new WaitForSeconds(gameSettings.timeFadeInOutIncrementalStep);
         }
 
-        player.GetComponent<PlayerInput>().enabled = true;
-        player.GetComponent<ThirdPersonController>().enabled = true;
-        player.GetComponent<CharacterController>().enabled = true;
+        transitionPanelImage.color = new Color(transitionPanelImage.color.r, transitionPanelImage.color.g, transitionPanelImage.color.b, targetAlpha);
+
+        if (isFadingIn)
+        {
+            playerInput.enabled = true;
+            thirdPersonController.enabled = true;
+            characterController.enabled = true;
+        }
     }
 
     private void FinishStage()
@@ -216,7 +220,7 @@ public class GameManagerBehavior : MonoBehaviour
     IEnumerator TransitionToCorridorWhenDayFinished()
     {
         houseTriggersContainer.SetActive(false);
-        yield return FadeOut();
+        yield return FadeInOrOut(false);
 
         musicAudioSource.Stop();
         musicAudioSource.clip = gameResources.corridorSong;
@@ -229,12 +233,12 @@ public class GameManagerBehavior : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         partyTimeElement.SetActive(false);
-        yield return FadeIn();
+        yield return FadeInOrOut(true);
     }
 
     IEnumerator TransitionToClub()
     {
-        yield return FadeOut();
+        yield return FadeInOrOut(false);
 
         musicAudioSource.Stop();
         musicAudioSource.clip = gameResources.bolicheSong;
@@ -243,16 +247,14 @@ public class GameManagerBehavior : MonoBehaviour
         player.transform.SetPositionAndRotation(playerClubPosition, new Quaternion(playerClubRotation.x, playerClubRotation.y, playerClubRotation.z, player.transform.rotation.w));
         cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camClubPositionZ);
 
-        yield return new WaitForSeconds(gameSettings.transitionBetweenStagesWaitingTimeInSeconds); //Este y el de abajo debería estar ligado. Sino el fade o termina antes o después.
-        yield return FadeIn();
+        yield return new WaitForSeconds(gameSettings.transitionBetweenStagesWaitingTimeInSeconds); 
+        yield return FadeInOrOut(true);
 
         clubTriggersContainer.SetActive(true);
 
         HUD.gameObject.SetActive(true);
         hudHouseCounters.SetActive(false);
         hudClubCounters.SetActive(true);
-        hudHouseTaskBar.SetActive(false);
-        hudClubTaskBar.SetActive(true);
 
         currentStage = CurrentStage.Night;
 
@@ -265,7 +267,7 @@ public class GameManagerBehavior : MonoBehaviour
     IEnumerator TransitionToHouseWhenNightFinished(bool isRestartedGame)
     {
         clubTriggersContainer.SetActive(false);
-        yield return FadeOut();
+        yield return FadeInOrOut(false);
 
         musicAudioSource.Stop();
         musicAudioSource.clip = gameResources.houseSong;
@@ -284,15 +286,13 @@ public class GameManagerBehavior : MonoBehaviour
         yield return new WaitForSeconds(gameSettings.transitionBetweenStagesWaitingTimeInSeconds);
 
         dayOverElement.SetActive(false);
-        yield return FadeIn();
+        yield return FadeInOrOut(true);
 
 
         houseTriggersContainer.SetActive(true);
         HUD.gameObject.SetActive(true);
         hudHouseCounters.SetActive(true);
         hudClubCounters.SetActive(false);
-        hudHouseTaskBar.SetActive(true);
-        hudClubTaskBar.SetActive(false);
 
         currentStage = CurrentStage.Day;
 
