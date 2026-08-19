@@ -82,27 +82,30 @@ public class GameManagerBehavior : MonoBehaviour
     int dayCounter = 0;
     float hideEndingCounter = 0;
 
-    enum CurrentStage
+    enum Stage
     {
-        Day,
+        House,
         Corridor,
-        Night
+        Club
     }
 
     PlayerInput playerInput;
     ThirdPersonController thirdPersonController;
     CharacterController characterController;
-    CurrentStage currentStage = CurrentStage.Day;
-    bool stopCoroutine = false;
+    Stage currentStage = Stage.House;
+
     internal bool gameOver = false;
     internal bool isHideEndingOn = false;
     internal bool isGameStarted = false;
     readonly int stageTotalHours = 12;
     int intervalDuration;
+    bool isRestartedGame = false;
+
+    IEnumerator totalGameCounterCoroutine;
 
     WaitForSeconds timeFadeInOutIncrementalStep;
-    WaitForSeconds transitionBetweenStagesTime;
     WaitForSeconds intervalTime;
+    WaitForSeconds readingTime;
 
     private void Start()
     {
@@ -153,12 +156,15 @@ public class GameManagerBehavior : MonoBehaviour
 
         intervalTime = new WaitForSeconds(intervalDuration);
         timeFadeInOutIncrementalStep = new WaitForSeconds(gameSettings.timeFadeInOutIncrementalStep);
-        transitionBetweenStagesTime = new WaitForSeconds(gameSettings.transitionBetweenStagesWaitingTimeInSeconds);
+        readingTime = new WaitForSeconds(gameSettings.ReadingTime);
 
         clubTriggersContainer.SetActive(false);
         accumulatedHours = 0;
         totalGameCounter = 0;
-        StartCoroutine(TotalGameCounter());
+
+        totalGameCounterCoroutine = TotalGameCounter();
+        StartCoroutine(totalGameCounterCoroutine);
+
         musicAudioSource.Play();
     }
 
@@ -172,7 +178,7 @@ public class GameManagerBehavior : MonoBehaviour
 
     IEnumerator TotalGameCounter()
     {
-        while (!stopCoroutine)
+        while (true)
         {
             totalGameCounter++;
             hudDayCounter.text = $"{totalGameCounter}";
@@ -180,14 +186,15 @@ public class GameManagerBehavior : MonoBehaviour
             if (totalGameCounter >= stageTotalHours)
             {
                 FinishStage();
+                break;
             }
             yield return intervalTime;
         }
     }
 
-    IEnumerator FadeInOrOut(bool isFadingIn)
+    IEnumerator FadeInOrOutToWhite(bool isFadingIn)
     {
-        float targetAlpha = isFadingIn ? 0f : 1f;
+        float targetAlpha = isFadingIn ? 1f : 0f;
 
         while (!Mathf.Approximately(transitionPanelImage.color.a, targetAlpha))
         {
@@ -200,123 +207,180 @@ public class GameManagerBehavior : MonoBehaviour
 
         if (isFadingIn)
         {
-            playerInput.enabled = true;
-            thirdPersonController.enabled = true;
-            characterController.enabled = true;
+            StartCoroutine(ShowTransitionUI());
+        }
+        else
+        {
+            FinishTransitionToStage();
         }
     }
 
     private void FinishStage()
     {
-        stopCoroutine = true;
-        accumulatedHours += totalGameCounter;
-        playerInput.enabled = false;
-        thirdPersonController.enabled = false;
-        characterController.enabled = false;
-        HUD.gameObject.SetActive(false);
+        if (currentStage != Stage.Corridor)
+        {
+            StopCoroutine(totalGameCounterCoroutine);
+            accumulatedHours += totalGameCounter;
+        }
+
+        MoveOutFromStage();
+    }
+
+    void MoveOutFromStage()
+    {
+        IsEnablingPlayer(false);
+        HidePreviousStageUI();
+        StartCoroutine(FadeInOrOutToWhite(true));
+    }
+
+    IEnumerator ShowTransitionUI()
+    {
         transitionPanel.SetActive(true);
+        switch (currentStage)
+        {
+            case Stage.House:
+                partyTimeElement.SetActive(true);
+                break;
+            case Stage.Corridor:
+                break;
+            case Stage.Club:
+                if (!isRestartedGame)
+                {
+                    dayOverElement.SetActive(true);
+                    dayCounter++;
+                    dayOverElementText.text = $"DAY {dayCounter} IS OVER";
+                }
+                break;
+            default:
+                break;
+        }
+
+        if (currentStage != Stage.Corridor)
+        {
+            yield return readingTime;
+        }
+
+        ChangeStageMusicAndRepositionPlayer();
+    }
+
+    private void HidePreviousStageUI()
+    {
+        HUD.gameObject.SetActive(false);
+        switch (currentStage)
+        {
+            case Stage.House:
+                houseTriggersContainer.SetActive(false);
+                hudHouseCounters.SetActive(false);
+                break;
+            case Stage.Corridor:
+                break;
+            case Stage.Club:
+                clubTriggersContainer.SetActive(false);
+                hudClubCounters.SetActive(false);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void ChangeStageMusicAndRepositionPlayer()
+    {
+        musicAudioSource.Stop();
 
         switch (currentStage)
         {
-            case CurrentStage.Day:
-                StartCoroutine(TransitionToCorridorWhenDayFinished());
+            case Stage.House:
+                musicAudioSource.clip = gameResources.corridorSong;
+
+                player.transform.SetPositionAndRotation(playerCorridorPosition, new Quaternion(playerCorridorRotation.x, playerCorridorRotation.y, playerCorridorRotation.z, player.transform.rotation.w));
+                cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camCorridorPositionZ);
+
                 break;
-            case CurrentStage.Night:
-                StartCoroutine(TransitionToHouseWhenNightFinished(false));
+            case Stage.Corridor:
+                musicAudioSource.clip = gameResources.clubSong;
+
+                player.transform.SetPositionAndRotation(playerClubPosition, new Quaternion(playerClubRotation.x, playerClubRotation.y, playerClubRotation.z, player.transform.rotation.w));
+                cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camClubPositionZ);
+
+                break;
+            case Stage.Club:
+                musicAudioSource.clip = gameResources.houseSong;
+
+                player.transform.SetPositionAndRotation(playerHousePosition, new Quaternion(playerHouseRotation.x, playerHouseRotation.y, playerHouseRotation.z, player.transform.rotation.w));
+                cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camHousePositionZ);
                 break;
         }
+
+
+        musicAudioSource.Play();
+        StartCoroutine(FadeInOrOutToWhite(false));
+        HideTransitionUI();
     }
 
-    IEnumerator TransitionToCorridorWhenDayFinished()
+    private void HideTransitionUI()
     {
-        houseTriggersContainer.SetActive(false);
-        yield return FadeInOrOut(false);
-
-        musicAudioSource.Stop();
-        musicAudioSource.clip = gameResources.corridorSong;
-        musicAudioSource.Play();
-
-        partyTimeElement.SetActive(true);
-
-        player.transform.SetPositionAndRotation(playerCorridorPosition, new Quaternion(playerCorridorRotation.x, playerCorridorRotation.y, playerCorridorRotation.z, player.transform.rotation.w));
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camCorridorPositionZ);
-
-        yield return transitionBetweenStagesTime;
-        partyTimeElement.SetActive(false);
-        yield return FadeInOrOut(true);
-    }
-
-    IEnumerator TransitionToClub()
-    {
-        yield return FadeInOrOut(false);
-
-        musicAudioSource.Stop();
-        musicAudioSource.clip = gameResources.clubSong;
-        musicAudioSource.Play();
-
-        player.transform.SetPositionAndRotation(playerClubPosition, new Quaternion(playerClubRotation.x, playerClubRotation.y, playerClubRotation.z, player.transform.rotation.w));
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camClubPositionZ);
-
-        yield return transitionBetweenStagesTime;
-        yield return FadeInOrOut(true);
-
-        clubTriggersContainer.SetActive(true);
-
-        HUD.gameObject.SetActive(true);
-        hudHouseCounters.SetActive(false);
-        hudClubCounters.SetActive(true);
-
-        currentStage = CurrentStage.Night;
-
-        stopCoroutine = false;
-
-        totalGameCounter = 0;
-        StartCoroutine(TotalGameCounter());
-    }
-
-    IEnumerator TransitionToHouseWhenNightFinished(bool isRestartedGame)
-    {
-        clubTriggersContainer.SetActive(false);
-        yield return FadeInOrOut(false);
-
-        musicAudioSource.Stop();
-        musicAudioSource.clip = gameResources.houseSong;
-        musicAudioSource.Play();
-
-        if (!isRestartedGame)
+        switch (currentStage)
         {
-            dayOverElement.SetActive(true);
-            dayCounter++;
-            dayOverElementText.text = $"DAY {dayCounter} IS OVER";
+            case Stage.House:
+                partyTimeElement.SetActive(false);
+                break;
+            case Stage.Corridor:
+                break;
+            case Stage.Club:
+                dayOverElement.SetActive(false);
+                break;
+            default:
+                break;
         }
+    }
 
-        player.transform.SetPositionAndRotation(playerHousePosition, new Quaternion(playerHouseRotation.x, playerHouseRotation.y, playerHouseRotation.z, player.transform.rotation.w));
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, camHousePositionZ);
+    private void FinishTransitionToStage()
+    {
+        IsEnablingPlayer(true);
+        switch (currentStage)
+        {
+            case Stage.House:
+                currentStage = Stage.Corridor;
+                break;
+            case Stage.Corridor:
+                HUD.gameObject.SetActive(true);
+                clubTriggersContainer.SetActive(true);
+                hudClubCounters.SetActive(true);
 
-        yield return transitionBetweenStagesTime;
+                currentStage = Stage.Club;
 
-        dayOverElement.SetActive(false);
-        yield return FadeInOrOut(true);
+                totalGameCounter = 0;
+                totalGameCounterCoroutine = TotalGameCounter();
+                StartCoroutine(totalGameCounterCoroutine);
+                break;
+            case Stage.Club:
+                HUD.gameObject.SetActive(true);
+                houseTriggersContainer.SetActive(true);
+                hudHouseCounters.SetActive(true);
 
+                currentStage = Stage.House;
 
-        houseTriggersContainer.SetActive(true);
-        HUD.gameObject.SetActive(true);
-        hudHouseCounters.SetActive(true);
-        hudClubCounters.SetActive(false);
+                totalGameCounter = 0;
+                totalGameCounterCoroutine = TotalGameCounter();
+                StartCoroutine(totalGameCounterCoroutine);
+                break;
+            default:
+                break;
+        }
+    }
 
-        currentStage = CurrentStage.Day;
-
-        stopCoroutine = false;
-
-        totalGameCounter = 0;
-        StartCoroutine(TotalGameCounter());
+    void IsEnablingPlayer(bool state)
+    {
+        playerInput.enabled = state;
+        thirdPersonController.enabled = state;
+        characterController.enabled = state;
     }
 
     public void ShowDefeatScreen()
     {
         if (!gameOver)
         {
-            stopCoroutine = true;
+            StopCoroutine(totalGameCounterCoroutine);
 
             musicAudioSource.Stop();
             var clip = gameResources.gameOverSong;
@@ -331,10 +395,7 @@ public class GameManagerBehavior : MonoBehaviour
 
     public void EnterClub()
     {
-        playerInput.enabled = false;
-        thirdPersonController.enabled = false;
-        characterController.enabled = false;
-        StartCoroutine(TransitionToClub());
+        FinishStage();
     }
 
     public void RestartGame()
@@ -344,7 +405,7 @@ public class GameManagerBehavior : MonoBehaviour
 
         TriggerBehavior[] triggers;
 
-        if (currentStage == CurrentStage.Day)
+        if (currentStage == Stage.House)
         {
             triggers = houseTriggersContainer.GetComponentsInChildren<TriggerBehavior>();
         }
@@ -359,7 +420,10 @@ public class GameManagerBehavior : MonoBehaviour
         }
 
         failureLayoutElement.SetActive(false);
-        StartCoroutine(TransitionToHouseWhenNightFinished(true));
+        isRestartedGame = true;
+        //Set to the last one, so the transition will be to the house.
+        currentStage = Stage.Club;
+        FinishStage();
     }
 
     internal void IncrementHiddenEndingCounter()
@@ -368,7 +432,7 @@ public class GameManagerBehavior : MonoBehaviour
 
         if (hideEndingCounter >= gameSettings.hideEndingLimit && !gameOver)
         {
-            stopCoroutine = true;
+            StopCoroutine(totalGameCounterCoroutine);
 
             musicAudioSource.Stop();
             musicAudioSource.clip = gameResources.hiddenEndingSong;

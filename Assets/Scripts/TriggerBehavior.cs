@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,6 +52,10 @@ public class TriggerBehavior : MonoBehaviour
     Slider counterBar;
 
     AudioClip[] taskSoundLibrary;
+    MeshRenderer[] taskBarLevels;
+
+    WaitForSeconds countdownTime;
+    WaitForSeconds cooldownTime;
 
     private void Awake()
     {
@@ -80,7 +85,16 @@ public class TriggerBehavior : MonoBehaviour
 
     private void Start()
     {
+        countdownTime = new WaitForSeconds(frequency);
+        cooldownTime = new WaitForSeconds(gameSettings.taskCooldownTime);
+
         taskBar = transform.Find("TaskBar").gameObject;
+        if (taskBar == null)
+        {
+            throw new Exception("TaskBar GameObject not found as a child of the TriggerBehavior GameObject.");
+        }
+        taskBarLevels = taskBar.GetComponentsInChildren<MeshRenderer>();
+
         taskSoundLibrary = gameResources.GetClickClips(counterType);
     }
 
@@ -102,13 +116,12 @@ public class TriggerBehavior : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            var clip = taskSoundLibrary[Random.Range(0, taskSoundLibrary.Length)];
+            var clip = taskSoundLibrary[UnityEngine.Random.Range(0, taskSoundLibrary.Length)];
             sfxAudioSource.clip = clip;
             sfxAudioSource.Play();
             taskCounter++;
 
-            var taskBarLvl = taskBar.transform.GetChild(taskCounter - 1).gameObject;
-            Renderer = taskBarLvl.GetComponent<MeshRenderer>();
+            Renderer = taskBarLevels[taskCounter - 1];
 
             Renderer.SetPropertyBlock(_mpbCompletedTaskLvl);
             if (taskCounter < gameSettings.totalTaskCounterRequired)
@@ -119,7 +132,6 @@ public class TriggerBehavior : MonoBehaviour
             sfxAudioSource.clip = gameResources.GetTaskCompletedClip(counterType);
             sfxAudioSource.Play();
 
-            var taskBarLevels = taskBar.transform.GetComponentsInChildren<MeshRenderer>();
             foreach (var level in taskBarLevels)
             {
                 level.SetPropertyBlock(_mpbUncompletedTaskLvl);
@@ -136,7 +148,6 @@ public class TriggerBehavior : MonoBehaviour
 
     public void RestartTaskBars()
     {
-        var taskBarLevels = taskBar.transform.GetComponentsInChildren<MeshRenderer>();
         foreach (var level in taskBarLevels)
         {
             level.SetPropertyBlock(_mpbUncompletedTaskLvl);
@@ -151,7 +162,7 @@ public class TriggerBehavior : MonoBehaviour
         while (i < 1)
         {
             i++;
-            yield return new WaitForSeconds(1);
+            yield return cooldownTime;
         }
         taskBarInCooldown = false;
     }
@@ -183,7 +194,7 @@ public class TriggerBehavior : MonoBehaviour
                 UpdateCounterText();
             }
 
-            yield return new WaitForSeconds(frequency);
+            yield return countdownTime;
         }
     }
 

@@ -12,15 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae825499d7135754baecacee3ce977d9, type: 3}
   m_Name: SO_GameSettings
   m_EditorClassIdentifier: 
-  CagarTotalCounter: 20
-  ComerTotalCounter: 20
-  TrabajarTotalCounter: 18
-  DormirTotalCounter: 20
-  VomitarTotalCounter: 20
-  EscabiarTotalCounter: 20
-  BesarTotalCounter: 20
-  DrogarseTotalCounter: 18
+  DefecatingTotalCounter: 15
+  EatingTotalCounter: 15
+  WorkingTotalCounter: 10
+  SleepingTotalCounter: 20
+  VomitingTotalCounter: 20
+  DrinkingTotalCounter: 20
+  KissingTotalCounter: 20
+  SmokingTotalCounter: 20
+  alphaFadeInOutIncrementalStep: 0.1
+  timeFadeInOutIncrementalStep: 0.1
   totalTaskCounterRequired: 5
   isTesting: 1
-  stageDurationInSeconds: 14
+  stageDurationInSeconds: 12
   hideEndingLimit: 21
+  transitionBetweenStagesWaitingTimeInSeconds: 2
+  ReadingTime: 3
+  taskCooldownTime: 1

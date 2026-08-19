@@ -49,6 +49,12 @@ public class SO_GameSettings : ScriptableObject
     [SerializeField]
     public int transitionBetweenStagesWaitingTimeInSeconds = 2;
 
+    [SerializeField]
+    public int ReadingTime = 3;
+
+    [SerializeField]
+    public int taskCooldownTime = 1;
+
     public int Selector(Counter counter)
     {
         switch (counter)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SO_GameResources
   m_EditorClassIdentifier: 
   corridorSong: {fileID: 8300000, guid: f2fdee53d53cdfb439fbed85bdc1ee79, type: 3}
-  bolicheSong: {fileID: 8300000, guid: b4555b3ea801b8849966c14e52a223b1, type: 3}
+  clubSong: {fileID: 8300000, guid: b4555b3ea801b8849966c14e52a223b1, type: 3}
   houseSong: {fileID: 8300000, guid: a6b9fea6b2330e8438c7c22b95713742, type: 3}
   gameOverSong: {fileID: 8300000, guid: 59357962d5848ab43a3f06095606d4e0, type: 3}
   hiddenEndingSong: {fileID: 8300000, guid: a2ecb9ced3b7b314da7c6d0cdec5535b, type: 3}
